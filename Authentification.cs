@@ -40,11 +40,16 @@ namespace AlgimedApp
 
             using (UsersContext db = new UsersContext())
             {
+                
                 var user = db.Users.Where(u => u.Login == textBox_Login.Text && u.Password == textBox_Password.Text);
-                if (user != null)
+                if (user.Count() > 0)
                 {
                     MainForm form = new MainForm();
                     form.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong password or login", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             
