@@ -29,11 +29,28 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.usersContextBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.usersContextBindingSource)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // usersContextBindingSource
+            // 
+            this.usersContextBindingSource.DataSource = typeof(AlgimedApp.AppContext.UsersContext);
+            // 
+            // Authentification
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "Authentification";
             this.Text = "Authentification";
+            ((System.ComponentModel.ISupportInitialize)(this.usersContextBindingSource)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private BindingSource usersContextBindingSource;
     }
 }
