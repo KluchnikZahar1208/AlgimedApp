@@ -84,6 +84,7 @@
             this.button_SignIn.TabIndex = 4;
             this.button_SignIn.Text = "Sign In";
             this.button_SignIn.UseVisualStyleBackColor = true;
+            this.button_SignIn.Click += new System.EventHandler(this.button_SignIn_Click);
             // 
             // label3
             // 

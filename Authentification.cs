@@ -1,4 +1,5 @@
 ﻿using AlgimedApp.AppContext;
+using AlgimedApp.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +18,11 @@ namespace AlgimedApp
         public Authentification()
         {
             InitializeComponent();
+            context = new UsersContext();
         }
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            this.context = new UsersContext();
            
         }
 
@@ -32,6 +33,21 @@ namespace AlgimedApp
             registration.ShowDialog();
             this.Visible = true;
 
+        }
+
+        private void button_SignIn_Click(object sender, EventArgs e)
+        {
+
+            using (UsersContext db = new UsersContext())
+            {
+                var user = db.Users.Where(u => u.Login == textBox_Login.Text && u.Password == textBox_Password.Text);
+                if (user != null)
+                {
+                    MainForm form = new MainForm();
+                    form.ShowDialog();
+                }
+            }
+            
         }
     }
 }

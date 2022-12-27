@@ -11,7 +11,7 @@ namespace AlgimedApp.AppContext
 {
     public class UsersContext:DbContext
     {
-        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<User> Users { get; set; }
         public UsersContext()
         {
             Database.EnsureCreated();
@@ -19,6 +19,11 @@ namespace AlgimedApp.AppContext
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
             dbContextOptionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=usersdb;Trusted_Connection=True;");
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>();
+            
         }
     }
 }
