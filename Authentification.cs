@@ -24,5 +24,14 @@ namespace AlgimedApp
             this.context = new UsersContext();
            
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Visible = false;
+            Registration registration = new Registration();
+            registration.ShowDialog();
+            this.Visible = true;
+
+        }
     }
 }

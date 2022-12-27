@@ -16,5 +16,10 @@ namespace AlgimedApp
         {
             InitializeComponent();
         }
+
+        private void linkLabel_Registration_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
