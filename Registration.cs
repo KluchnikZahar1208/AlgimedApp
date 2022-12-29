@@ -26,29 +26,55 @@ namespace AlgimedApp
 
         private void button_SignUp_Click(object sender, EventArgs e)
         {
-            DbAccess dbAccess = new DbAccess();
-            dbAccess.ShowDialog();
-            bool access = dbAccess.Access;
-            if (access)
+            if(textBox_Login.Text == "" || textBox_Password.Text == "" || textBox_ConfirmPassword.Text == "")
             {
-                if (textBox_Password.Text == textBox_ConfirmPassword.Text)
-                {
-                    using (UsersContext db = new UsersContext())
-                    {
-                        db.Users.Add(new User { Login = textBox_Login.Text, Password = textBox_Password.Text });
-                        db.SaveChanges();
-                    }
-                    MainForm form = new MainForm();
-                    this.Visible = false;
-                    form.ShowDialog();
-                    this.Visible = true;
-
-                }
+                MessageBox.Show("Fill in all the fields", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("Wrong password to DB", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                if (textBox_Password.Text == textBox_ConfirmPassword.Text)
+                {
+                    DbAccess dbAccess = new DbAccess();
+                    dbAccess.ShowDialog();
+                    bool access = dbAccess.Access;
+                    if (access)
+                    {
+                        using (UsersContext db = new UsersContext())
+                        {
+
+                            var user = db.Users.Where(u => u.Login == textBox_Login.Text && u.Password == textBox_Password.Text);
+                            if (user.Count() > 0)
+                            {
+                                MessageBox.Show("Account already exists", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                db.Users.Add(new User { Login = textBox_Login.Text, Password = textBox_Password.Text });
+                                db.SaveChanges();
+                                MainForm form = new MainForm();
+                                this.Visible = false;
+                                form.ShowDialog();
+                                this.Visible = true;
+                            }
+                        }
+                       
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong password to DB", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    
+
+                }
+                else
+                {
+                    MessageBox.Show("Wrong confirm password", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
             }
+
+            
             
             
         }

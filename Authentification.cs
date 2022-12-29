@@ -37,22 +37,27 @@ namespace AlgimedApp
 
         private void button_SignIn_Click(object sender, EventArgs e)
         {
-
-            using (UsersContext db = new UsersContext())
+            if(textBox_Login.Text == "" || textBox_Password.Text == "")
             {
-                
-                var user = db.Users.Where(u => u.Login == textBox_Login.Text && u.Password == textBox_Password.Text);
-                if (user.Count() > 0)
+                MessageBox.Show("Fill in all the fields", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                using (UsersContext db = new UsersContext())
                 {
-                    MainForm form = new MainForm();
-                    form.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("Wrong password or login", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    var user = db.Users.Where(u => u.Login == textBox_Login.Text && u.Password == textBox_Password.Text);
+                    if (user.Count() > 0)
+                    {
+                        MainForm form = new MainForm();
+                        form.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong password or login", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-            
         }
     }
 }
