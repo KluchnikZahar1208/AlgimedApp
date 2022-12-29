@@ -26,16 +26,30 @@ namespace AlgimedApp
 
         private void button_SignUp_Click(object sender, EventArgs e)
         {
-            if(textBox_Password.Text == textBox_ConfirmPassword.Text)
+            DbAccess dbAccess = new DbAccess();
+            dbAccess.ShowDialog();
+            bool access = dbAccess.Access;
+            if (access)
             {
-                using (UsersContext db = new UsersContext())
+                if (textBox_Password.Text == textBox_ConfirmPassword.Text)
                 {
-                    db.Users.Add(new User { Login = textBox_Login.Text, Password = textBox_Password.Text });
-                    db.SaveChanges();
+                    using (UsersContext db = new UsersContext())
+                    {
+                        db.Users.Add(new User { Login = textBox_Login.Text, Password = textBox_Password.Text });
+                        db.SaveChanges();
+                    }
+                    MainForm form = new MainForm();
+                    this.Visible = false;
+                    form.ShowDialog();
+                    this.Visible = true;
+
                 }
-                MainForm form = new MainForm();
-                form.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("Wrong password to DB", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
             
         }
     }
